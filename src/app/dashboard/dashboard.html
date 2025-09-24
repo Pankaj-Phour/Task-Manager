@@ -1,0 +1,67 @@
+<div class="parent">
+    <div class="top">
+        <div class="left">
+            <div class="header">Welcome back</div>
+        </div>
+        <div class="right">
+            <div class="buttonSection">
+                <button class="submitButton" (click)="addNewProject()">New Project</button>
+                <button class="cancelButton">Log out</button>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="filters">
+            <div class="filterHeading"></div>
+            <div class="tabs">
+                <div class="singleTab"></div>
+            </div>
+        </div>
+        <div class="data">
+            <div class="projectCards">
+                @for(project of projects();track i;let i = $index){
+                <div class="singleProject">
+                    <div class="projectDetails">
+                        <div class="projectHeader">
+                            <div class="title">{{project.name}}</div>
+                            <div class="addTask">
+                                <!-- <button class="cancelButton">Add Task</button> -->
+                                <button class="submitButton" (click)="addNewTask(i)">Add Task</button>
+                            </div>
+                        </div>
+
+                        <div class="projectDescription">
+                            {{project.description}}
+                        </div>
+                        <div class="projectCreation">Created on : {{project.createdAt}}</div>
+                        <div class="taskCount">
+                            <!-- @if(project.pendingCount){ -->
+                                <div class="status pending">{{project.pendingCount}} Pending </div>
+                            <!-- } -->
+                            <!-- @if(project.completeCount){ -->
+                                <div class="status completed">{{project.completeCount}} Complete </div>
+                            <!-- } -->
+                            <!-- @if(project.cancelCount){ -->
+                                <div class="status cancelled">{{project.cancelCount}} cancelled </div>
+                            <!-- } -->
+                        </div>
+                    </div>
+                    <div class="taskDetails">
+                        @for(task of project.tasks;track j;let j = $index){
+                        <div class="singleTask" [ngClass]="(task.status == 'completed') ? 'completeTask' : (task.status == 'pending') ? 'pendingTask' : ''" (click)="updateTask(task,i,j)">
+                            <div class="taskHeader">
+                                <div class="title">{{task.title}}</div>
+                                <div class="status" [ngClass]="task.status">{{task.status}}</div>
+                                <!-- <div class="edit"></div> -->
+                            </div>
+                            <div class="taskDescription">{{task.description}}</div>
+                            <div class="creation"></div>
+                        </div>
+                    }
+                    </div>
+                </div>
+            }
+            </div>
+        </div>
+    </div>
+</div>

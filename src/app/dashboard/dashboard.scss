@@ -1,0 +1,197 @@
+
+.parent{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    height: 100%;
+    padding: 1.5rem;
+    .top{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        .left{
+            .header{
+                font-size: 1.5rem;
+                font-weight: 600;
+            }
+        }
+        .right{
+            .buttonSection{
+                display: flex;
+                gap: 1rem;
+
+            }
+        }
+    }
+    .content{
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        gap: 1.5rem;
+        height: 100%;
+        .filters{
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            .filterHeading{
+                font-size: 1.125rem;
+                font-weight: 500;
+            }
+            .tabs{
+                display: flex;
+                width: 100%;
+                gap: 1rem;
+                align-items: center;
+                .singleTab{
+                    padding: 0.25rem 0.75rem;
+                }
+            }
+        }
+        .data{
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            .projectCards{
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1.5rem;
+                width: 100%;
+                height: 100%;
+                padding: 0.25rem;
+                .singleProject{
+                    width: 400px;
+                    height: 430px;
+                    min-width: 320px;
+                    padding: 1rem;
+                    border-radius: 0.5rem;
+                    // border: 1px solid black;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+                    box-shadow: 2px 2px 8px 2px rgba(0,0,0,0.25);
+                    .projectDetails{
+                        width: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 0.5rem;
+                        .projectHeader{
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            gap: 1rem;
+                            .title{
+                                font-weight: 500;
+                                font-size: 1.125rem;
+                            }
+                        }
+                        .projectDescription{
+                            width: 100%;
+                            color: gray;
+                            font-size: 1rem;
+                        }
+                        .taskCount{
+                            width: 100%;
+                            display: flex;
+                            gap: 0.5rem;
+
+                            .status{
+                                padding: 0.15rem 0.65rem;
+                                font-size: 0.75rem;
+                                border-radius: 1rem;
+                                background-color: rgb(211, 211, 211);
+                                font-weight: 500;
+                            }
+                            .pending{
+                                background-color: oklch(.973 .071 103.193);
+                                color: oklch(.476 .114 61.907);
+                                // border: 1px solid rgb(222, 179, 7);
+                            }
+                            .completed{
+                                background-color: oklch(.962 .044 156.743);
+                                color: oklch(.448 .119 151.328);
+                                // border: 1px solid oklch(.448 .119 151.328);
+                            }
+                            
+                        }
+                        .projectCreation{
+                            color: darkgray;
+                            font-size: 0.875rem;
+                        }
+                    }
+                    .taskDetails{
+                        display: flex;
+                        flex-direction: column;
+                        gap: 0.5rem;
+                        width: 100%;
+                        height: 100%;
+                        overflow-y: auto;
+                        padding-block: 0.25rem;
+                        .singleTask{
+                            width: 100%;
+                            padding: 0.5rem;
+                            border: 2px solid gray;
+                            border-radius: 0.25rem;
+                            flex-direction: column;
+                            gap: 0.25rem;
+                            .taskHeader{
+                                width: 100%;
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                gap: 0.5rem;
+                                .title{
+                                    font-size: 1rem;
+                                    font-weight: 500;
+                                }
+                                
+                            }
+                            .taskDescription{
+                                font-size: 0.875rem;
+                                color: gray;
+                            }
+                        }
+                        .singleTask:hover{
+                            cursor: pointer;
+                            transform: translateY(-1px);
+                        }
+                        .completeTask{
+                            border: 2px solid oklch(.448 .119 151.328);
+                            background-color: #e8ffe8;
+                        }
+                        .pendingTask{
+                            border: 2px solid oklch(.476 .114 61.907);
+                            background-color: #ffffe8;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+.status{
+    padding: 0.15rem 0.65rem;
+    font-size: 0.75rem;
+    border-radius: 1rem;
+    background-color: white;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+.pending{
+    background-color: oklch(.973 .071 103.193);
+    color: oklch(.476 .114 61.907);
+    // border: 1px solid rgb(222, 179, 7);
+}
+.completed{
+    background-color: oklch(.962 .044 156.743);
+    color: oklch(.448 .119 151.328);
+    // border: 1px solid oklch(.448 .119 151.328);
+}
+.cancelled{
+    background-color: #c5c5c5;
+
+}

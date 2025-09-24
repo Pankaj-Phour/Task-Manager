@@ -1,0 +1,18 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class Api {
+  constructor(private http:HttpClient){}
+
+  getApi(endpoint:string){
+    return this.http.get(environment.api + endpoint);
+  }
+
+  postApi(endpoint:string,params:any){
+    return this.http.post(environment.api + endpoint,params);
+  }
+}

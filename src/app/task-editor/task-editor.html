@@ -1,0 +1,35 @@
+<div class="parent">
+    <div class="top">
+        <div class="heading">Task Details</div>
+    </div>
+    <div class="content">
+        <div class="form" [formGroup]="taskForm">
+            <div class="formGroup">
+                <div class="label">Title</div>
+                <input type="text" placeholder="Task title" formControlName="title">
+            </div>
+            <div class="formGroup">
+                <div class="label">Description</div>
+                <input type="text" placeholder="Task description" formControlName="description">
+            </div>
+            <div class="formGroup">
+                <div class="label">status</div>
+                <mat-form-field>
+                    <mat-select formControlName="status">
+                        <mat-option value="pending">Pending</mat-option>
+                        <mat-option value="complete">Complete</mat-option>
+                        <mat-option value="cancelled">Cancel</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="formGroup">
+                <div class="label">Message</div>
+                <textarea placeholder="Enter message (optional)" formControlName="message" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="buttonSection">
+            <button class="cancelButton" (click)="dialogRef.close()">Cancel</button>
+            <button class="submitButton" (click)="updateTask()">Update</button>
+        </div>
+    </div>
+</div>

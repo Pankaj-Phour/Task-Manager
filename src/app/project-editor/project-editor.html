@@ -1,0 +1,22 @@
+<div class="parent">
+    <div class="top">
+        <div class="heading">Create New Project</div>
+        <div class="description">Add a new project to organize your tasks.</div>
+    </div>
+    <div class="content">
+        <div class="form" [formGroup]="projectForm">
+            <div class="formGroup">
+                <div class="label">Project title</div>
+                <input type="text" placeholder="Project title" formControlName="title">
+            </div>
+            <div class="formGroup">
+                <div class="label">Project Description</div>
+                <input type="text" placeholder="Project description" formControlName="description">
+            </div>
+        </div>
+        <div class="buttonSection">
+            <button class="cancelButton" (click)="dialogRef.close()">Cancel</button>
+            <button class="submitButton" (click)="submit()">Submit</button>
+        </div>
+    </div>
+</div>
