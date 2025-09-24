@@ -72,3 +72,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-mdc-form-field-subscript-wrapper{
   display: none !important;
 }
+
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+// ::-webkit-scrollbar-track {
+//   background: #f1f1f1;      /* background of track */
+//   border-radius: 10px;
+// }
+::-webkit-scrollbar {
+  padding-inline: 0.15rem;
+  width: 0.25rem;
+}

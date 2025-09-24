@@ -85,6 +85,10 @@
                             .title{
                                 font-weight: 500;
                                 font-size: 1.125rem;
+                                max-width: 60%;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
                             }
                         }
                         .projectDescription{
@@ -129,6 +133,7 @@
                         height: 100%;
                         overflow-y: auto;
                         padding-block: 0.25rem;
+                        padding-inline: 0.15rem;
                         .singleTask{
                             width: 100%;
                             padding: 0.5rem;
@@ -143,13 +148,13 @@
                                 align-items: center;
                                 gap: 0.5rem;
                                 .title{
-                                    font-size: 1rem;
+                                    font-size: 0.875rem;
                                     font-weight: 500;
                                 }
                                 
                             }
                             .taskDescription{
-                                font-size: 0.875rem;
+                                font-size: 0.75rem;
                                 color: gray;
                             }
                         }
@@ -165,7 +170,25 @@
                             border: 2px solid oklch(.476 .114 61.907);
                             background-color: #ffffe8;
                         }
+                        .innerMessage{
+                            width: 100%;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            font-size: 1rem;
+                            font-weight: 500;
+                            height: 100%;
+                        }
                     }
+                }
+                .message{
+                    font-size: 1.25rem;
+                    font-weight: 500;
+                    width: 100%;
+                    text-align: center;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
                 }
             }
         }

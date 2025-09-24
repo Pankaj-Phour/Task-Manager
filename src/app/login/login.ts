@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output, signal } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Api } from '../services/api';
 
 @Component({
   selector: 'app-login',
@@ -10,53 +11,39 @@ import { Router } from '@angular/router';
   styleUrl: './login.scss'
 })
 export class Login {
-  @Output() userLoggedIn = new EventEmitter();
+userForm:FormGroup;
+error = signal({value:false,message:''});
 
-  isLogin = signal(true);
-  formData = {
-    email: '',
-    password: ''
-  };
+  constructor(private router:Router,private _api:Api,private _fb:FormBuilder){};
 
-  constructor(private router:Router){};
+  validation(){
+    this.userForm = this._fb.group({
+      email: new FormControl('',Validators.required),
+      password: new FormControl('',Validators.required)
+    })
+  }
+
+  ngOnInit(){
+    this.validation();
+
+    this.userForm.valueChanges.subscribe(val=>{
+      this.error.set({value:false,message:''});
+    })
+  }
 
   handleSubmit() {
-    if (this.isLogin()) {
-      // Mock login - in real app, this would validate against backend
-      const mockUser: any = {
-        id: '1',
-        email: this.formData.email || 'demo@example.com'
-      };
-      
-      this.showToast('Successfully logged in!', 'success');
-      localStorage.setItem('user',JSON.stringify(mockUser));
-      this.router.navigate(['/dashboard']);
-    } else {
-      // Mock registration
-      const newUser: any = {
-        id: Date.now().toString(),
-        email: this.formData.email
-      };
-      
-      this.showToast('Account created successfully!', 'success');
-      localStorage.setItem('user',JSON.stringify(newUser));
-      this.router.navigate(['/dashboard']);
-    }
+    let value = this.userForm.value;
+    this._api.postApi('/signin',value).subscribe((res:any)=>{
+      console.log(res);
+      if(res && !res.error){
+        this.userForm.reset();
+        localStorage.setItem('user',JSON.stringify(res.response));
+        this.router.navigate(['/dashboard']);
+      }
+      else{
+        this.error.set({value:true,message:res.message})
+      }
+    })
   }
-
-  toggleMode() {
-    this.isLogin.set(!this.isLogin());
-  }
-
-  private showToast(message: string, type: 'success' | 'error') {
-    // Simple toast implementation - in real app, use a proper toast service
-    const toast = document.createElement('div');
-    toast.className = `toast toast-${type}`;
-    toast.textContent = message;
-    document.body.appendChild(toast);
-    
-    setTimeout(() => {
-      document.body.removeChild(toast);
-    }, 3000);
-  }
+  
 }
