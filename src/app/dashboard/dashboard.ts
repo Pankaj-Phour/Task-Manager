@@ -4,10 +4,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { TaskEditor } from '../task-editor/task-editor';
 import { Api } from '../services/api';
 import { ProjectEditor } from '../project-editor/project-editor';
+import { Router } from '@angular/router';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule],
+  imports: [CommonModule,MatTooltipModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'
 })
@@ -15,71 +17,39 @@ export class Dashboard {
   projects:any = signal([]);
   loader = signal(false);
 
-  constructor(private dialog:MatDialog,private _api:Api){}
+  constructor(private dialog:MatDialog,private _api:Api,private router:Router){}
 
   ngOnInit() {
     this.loadProjects();
   }
 
-  private loadProjects() {
-      const mockProjects:any = [
-        {
-          id: '1',
-          name: 'Website Redesign',
-          description: 'Complete redesign of company website',
-          createdAt: (new Date().toDateString()),
-          pendingCount:1,
-          completeCount:1,
-          cancelCount:0,
-          tasks: [
-            {
-              id: '1',
-              title: 'Design Homepage',
-              description: 'Create new homepage design with modern UI',
-              status: 'pending',
-              projectId: '1',
-              createdAt: new Date().toDateString(),
-              updatedAt: new Date().toDateString(),
-              screenshots: []
-            },
-            {
-              id: '2',
-              title: 'Implement Responsive Design',
-              description: 'Make the design responsive for mobile devices',
-              status: 'completed',
-              projectId: '1',
-              createdAt: new Date().toDateString(),
-              updatedAt: new Date().toDateString(),
-              screenshots: [],
-              completionNote: 'Used CSS Grid and Flexbox for responsive layout'
+  loadProjects() {
+     this._api.getApi('/projects').subscribe((res:any)=>{
+      console.log(res);
+      if(res && !res.error){
+        let response = res.response;
+        for(let item of response){
+          item['pendingCount'] = 0;
+          item['completeCount'] = 0;
+          item['cancelCount'] = 0;
+          for(let task of item.tasks){
+            if(task.status == 'pending'){
+              item.pendingCount += 1;
             }
-          ]
-        },
-        {
-          id: '2',
-          name: 'Mobile App Development',
-          description: 'Build cross-platform mobile application',
-          createdAt: new Date().toDateString(),
-          pendingCount:0,
-          completeCount:0,
-          cancelCount:1,
-          tasks: [
-            {
-              id: '3',
-              title: 'Setup Development Environment',
-              description: 'Install and configure React Native development tools',
-              status: 'cancelled',
-              projectId: '2',
-              createdAt: new Date().toDateString(),
-              updatedAt: new Date().toDateString(),
-              screenshots: [],
-              completionNote: 'Decided to go with Flutter instead'
+            else if(task.status == 'complete'){
+              item.completeCount += 1;
             }
-          ]
+            else{
+              item.cancelCount += 1;
+            }
+          }
         }
-      ];
-      this.projects.set(mockProjects);
-    console.log(this.projects());
+        this.projects.set(response);
+        console.log(this.projects());
+        
+      }
+      
+     })
   }
 
   addNewProject(){
@@ -116,7 +86,7 @@ export class Dashboard {
     }
         let dialog = this.dialog.open(TaskEditor,{
       height:'80%',
-      maxHeight:'500px',
+      maxHeight:'550px',
       minHeight:'fit-content',
       width:'95%',
       maxWidth:'450px',
@@ -128,6 +98,8 @@ export class Dashboard {
       console.log(val);
       if(val && val.update){
         this.loader.set(true);
+        let value = val.data;
+        value['project'] = this.projects()[index]._id;
         this._api.postApi('/create-task',val.data).subscribe((res:any)=>{
           this.loader.set(false);
           console.log(res);
@@ -149,7 +121,7 @@ export class Dashboard {
     }
     let dialog = this.dialog.open(TaskEditor,{
       height:'80%',
-      maxHeight:'500px',
+      maxHeight:'550px',
       minHeight:'fit-content',
       width:'95%',
       maxWidth:'450px',
@@ -176,5 +148,10 @@ export class Dashboard {
         })
       }
     })
+  }
+
+  logout(){
+    localStorage.clear();
+    this.router.navigate(['/login'])
   }
 }

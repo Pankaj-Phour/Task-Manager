@@ -19,7 +19,7 @@ export class TaskEditor {
 
   validation(){
     this.taskForm = this._fb.group({
-      project_id: new FormControl('',Validators.required),
+      project: new FormControl('',Validators.required),
       title: new FormControl('',Validators.required),
       description: new FormControl('',Validators.required),
       status: new FormControl('pending',Validators.required),

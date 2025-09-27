@@ -8,7 +8,7 @@
         </div>
         
         <div class="card-content">
-          <form (ngSubmit)="handleSubmit()" class="space-y-4">
+          <form class="space-y-4"[formGroup]="userForm">
             <div class="space-y-2">
               <label for="email" class="label">Email</label>
               <input
@@ -16,7 +16,7 @@
                 name="email"
                 type="email"
                 placeholder="Enter your email"
-                [(ngModel)]="formData.email"
+                formControlName="email"
                 class="input"
                 required
               />
@@ -29,13 +29,17 @@
                 name="password"
                 type="password"
                 placeholder="Enter your password"
-                [(ngModel)]="formData.password"
+                formControlName="password"
                 class="input"
                 required
               />
             </div>
-            
-            <button type="submit" class="btn btn-primary w-full">
+            @if(error().value){
+              <div class="errorMessage">
+                {{error().message}}
+              </div>
+            }
+            <button type="button" class="btn btn-primary w-full" [disabled]="userForm.invalid" (click)="handleSubmit()">
               Sign In
             </button>
           </form>

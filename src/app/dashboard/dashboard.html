@@ -6,7 +6,7 @@
         <div class="right">
             <div class="buttonSection">
                 <button class="submitButton" (click)="addNewProject()">New Project</button>
-                <button class="cancelButton">Log out</button>
+                <button class="cancelButton" (click)="logout()">Log out</button>
             </div>
         </div>
     </div>
@@ -19,11 +19,12 @@
         </div>
         <div class="data">
             <div class="projectCards">
+                @if(projects().length){
                 @for(project of projects();track i;let i = $index){
                 <div class="singleProject">
                     <div class="projectDetails">
                         <div class="projectHeader">
-                            <div class="title">{{project.name}}</div>
+                            <div class="title" [matTooltip]="project.title">{{project.title}}</div>
                             <div class="addTask">
                                 <!-- <button class="cancelButton">Add Task</button> -->
                                 <button class="submitButton" (click)="addNewTask(i)">Add Task</button>
@@ -47,6 +48,7 @@
                         </div>
                     </div>
                     <div class="taskDetails">
+                        @if(project.tasks.length){
                         @for(task of project.tasks;track j;let j = $index){
                         <div class="singleTask" [ngClass]="(task.status == 'completed') ? 'completeTask' : (task.status == 'pending') ? 'pendingTask' : ''" (click)="updateTask(task,i,j)">
                             <div class="taskHeader">
@@ -58,9 +60,17 @@
                             <div class="creation"></div>
                         </div>
                     }
+                }
+                @else {
+                    <div class="innerMessage">No task in this project. Click the 'Add Task' button to add new task in this project.</div>
+                }
                     </div>
                 </div>
             }
+        }
+        @else {
+            <div class="message">No Projects for your account. click the 'New Project' button to start creating projects.</div>
+        }
             </div>
         </div>
     </div>
